@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        image_name: ["order","shipping","inventory"]
+        image_name: ["order", "shipping", "inventory"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,17 +21,17 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: 20
+          java-version: 17
           distribution: "corretto"
 
       - name: Build
         working-directory: ${{ matrix.image_name }}
-        run:
+        run: |
           ./gradlew bootJar
           mv build/libs/$(ls build/libs) app.jar
 
       - name: Log in to Github Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -41,7 +41,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/${{ matrix.image_name }}:latest
+          images: ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/${{ matrix.image_name }}
 
       - name: Build and push ${{ matrix.image_name }}
         uses: docker/build-push-action@v4
@@ -51,5 +51,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          secrets:
-            GITHUB_TOKEN:${{ secrets.GH_TOKEN }}
+          secrets: |
+            GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
+
