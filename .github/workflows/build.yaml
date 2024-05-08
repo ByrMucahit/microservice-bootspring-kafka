@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   REGISTRY: ghcr.io
@@ -35,7 +35,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: "!Dev789?."
+          password: ${{ secrets.GH_TOKEN }}
 
       - name: Extract image metadata for ${{ matrix.image_name }}
         id: meta
