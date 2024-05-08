@@ -52,5 +52,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           secrets: |
-            GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
+            GITHUB_TOKEN="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"
 
