@@ -26,7 +26,7 @@ jobs:
 
       - name: Build
         working-directory: ${{ matrix.image_name }}
-        run:
+        run: |
           ./gradlew bootJar
           mv build/libs/$(ls build/libs) app.jar
 
