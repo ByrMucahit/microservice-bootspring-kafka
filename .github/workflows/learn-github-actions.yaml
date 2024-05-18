@@ -35,7 +35,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.PASSWORD }}
+          password: ${{ secrets.GH_PASS }}
 
       - name: Extract image metadata for ${{ matrix.image_name }}
         id: meta
